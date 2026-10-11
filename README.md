@@ -2,6 +2,8 @@
 
 A two-page personal site (Home and Contact) built with React and Vite, based on a Figma Make prototype.
 
+**Live site:** https://inika-t.github.io/webdevbootcamp/
+
 ## Run it locally
 
 You need [Bun](https://bun.sh) installed.
@@ -26,3 +28,7 @@ Then open the address it prints (usually http://localhost:5173).
 - `src/data/` — the project list, artwork slides, and contact links
 - `src/index.css` — colors, fonts, and shared styles
 - `public/images/` — images used by the site
+
+## Deployment
+
+Every push to `main` rebuilds the site and publishes it to GitHub Pages (see `.github/workflows/deploy.yml`).

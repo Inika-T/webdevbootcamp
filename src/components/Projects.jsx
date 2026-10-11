@@ -1,10 +1,15 @@
 import { projects } from '../data/projects.js'
+import { publicUrl } from '../publicUrl.js'
 import './Projects.css'
 
 function Projects({ onPreviewResume }) {
   return (
     <section className="work-section halftone" id="work">
-      <img className="cityscape" src="/images/city-purple.webp" alt="" />
+      <img
+        className="cityscape"
+        src={publicUrl('/images/city-purple.webp')}
+        alt=""
+      />
       <div className="section-heading">
         <h2 className="glitch">PROJECTS</h2>
       </div>
@@ -54,7 +59,7 @@ function Projects({ onPreviewResume }) {
         >
           Preview resume <span>↗</span>
         </button>
-        <a className="comic-button yellow" href="/resume.pdf" download>
+        <a className="comic-button yellow" href={publicUrl('/resume.pdf')} download>
           Download resume <span>↓</span>
         </a>
       </div>

@@ -1,4 +1,5 @@
 import { emails, socials } from '../data/contact.js'
+import { publicUrl } from '../publicUrl.js'
 import './Contact.css'
 
 function Contact() {
@@ -38,7 +39,7 @@ function Contact() {
 
       <img
         className="contact-art"
-        src="/images/contact-gwen-cutout.webp"
+        src={publicUrl('/images/contact-gwen-cutout.webp')}
         alt=""
         width="1080"
         height="863"

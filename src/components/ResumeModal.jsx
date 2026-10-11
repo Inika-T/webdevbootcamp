@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { publicUrl } from '../publicUrl.js'
 import './ResumeModal.css'
 
 function ResumeModal({ onClose }) {
@@ -27,7 +28,7 @@ function ResumeModal({ onClose }) {
     >
       <div className="resume-modal-panel">
         <div className="resume-modal-actions">
-          <a href="/resume.pdf" download>
+          <a href={publicUrl('/resume.pdf')} download>
             Download
           </a>
           <button
@@ -39,7 +40,7 @@ function ResumeModal({ onClose }) {
           </button>
         </div>
         <iframe
-          src="/resume.pdf#view=FitH&toolbar=0&navpanes=0"
+          src={`${publicUrl('/resume.pdf')}#view=FitH&toolbar=0&navpanes=0`}
           title="Inika Talati resume"
         />
       </div>

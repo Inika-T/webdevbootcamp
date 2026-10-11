@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { artwork } from '../data/artwork.js'
+import { publicUrl } from '../publicUrl.js'
 import './ArtCarousel.css'
 
 function ArtCarousel() {
@@ -16,7 +17,7 @@ function ArtCarousel() {
     <section className="art-section halftone" id="art">
       <img
         className="art-cityscape"
-        src="/images/city-art-section.webp"
+        src={publicUrl('/images/city-art-section.webp')}
         alt=""
       />
       <div className="section-heading">
@@ -34,7 +35,7 @@ function ArtCarousel() {
         <div className="art-stage">
           <img
             className="art-piece"
-            src={artwork[active].src}
+            src={publicUrl(artwork[active].src)}
             alt={artwork[active].title}
             width="1080"
             height="1080"

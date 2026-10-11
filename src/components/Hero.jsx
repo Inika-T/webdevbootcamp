@@ -25,7 +25,7 @@ function Hero() {
         <div className="scribble" />
         <div className="scribble scribble-two" />
         <div className="portrait-card">
-          {/* Swap this block for <img src="/images/portrait.webp" alt="Inika Talati" /> once there is a photo */}
+          {/* Swap this block for <img src={publicUrl('/images/portrait.webp')} alt="Inika Talati" /> once there is a photo */}
           <div className="portrait-placeholder">
             <svg aria-hidden="true" viewBox="0 0 240 280">
               <circle cx="120" cy="92" r="52" />
