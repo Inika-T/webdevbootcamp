@@ -1,0 +1,39 @@
+.ticker {
+  overflow: hidden;
+  padding: 1rem 0;
+  border-block: 2px solid var(--ink);
+  color: var(--ink);
+  background: var(--pink);
+  font-family: var(--display);
+  font-size: clamp(1rem, 2vw, 1.5rem);
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+  transform: rotate(-1deg) scale(1.02);
+
+  > div {
+    width: max-content;
+    animation: marquee 120s linear infinite;
+
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+  }
+
+  /* Breathing room between the end of the word list and its next run */
+  .ticker-group {
+    padding-right: clamp(4rem, 10vw, 9rem);
+  }
+
+  b {
+    padding: 0 1.2rem;
+    color: var(--yellow);
+    -webkit-text-stroke: 1px var(--ink);
+  }
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}

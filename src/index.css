@@ -1,111 +1,215 @@
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  --ink: #08080b;
+  --paper: #f0ede4;
+  --pink: #ff2aa1;
+  --cyan: #45dff5;
+  --yellow: #f5ee4a;
+  --purple: #9d4edd;
+  --muted: #bdb9b5;
+  --dim: #777;
+  --line: rgba(240, 237, 228, 0.18);
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
+  --display: 'Barlow Condensed', Impact, sans-serif;
+  --label: 'Abel', sans-serif;
+  --mono: 'Anonymous Pro', monospace;
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
+  color-scheme: dark;
+  color: var(--paper);
+  background: var(--ink);
+  font-family: var(--mono);
+  line-height: 1.5;
   font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+}
 
-  @media (max-width: 1024px) {
-    font-size: 16px;
+/* Reset browser defaults so every element starts from the same baseline */
+*,
+::before,
+::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 0 solid;
+}
+
+h1,
+h2,
+h3 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+img,
+svg,
+iframe {
+  display: block;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+button {
+  color: inherit;
+  background: transparent;
+  font: inherit;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--ink);
+
+  @media (prefers-reduced-motion: reduce) {
+    scroll-behavior: auto;
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
+/* Hairline scrollbar with a cyan-to-pink thumb (Chrome, Edge, Safari) */
+::-webkit-scrollbar {
+  width: 2px;
+  height: 2px;
+}
 
-  #social .button-icon {
-    filter: invert(1) brightness(2);
+::-webkit-scrollbar-track {
+  background: var(--ink);
+}
+
+::-webkit-scrollbar-thumb {
+  border-block: 2px solid var(--ink);
+  background: linear-gradient(var(--cyan), var(--pink));
+
+  &:hover {
+    background: var(--yellow);
+  }
+}
+
+/* Firefox has no gradient scrollbars, so it gets a thin pink one. This is
+   scoped to Firefox because these properties switch off the rules above. */
+@supports (-moz-appearance: none) {
+  html {
+    scrollbar-color: var(--pink) var(--ink);
+    scrollbar-width: thin;
   }
 }
 
 body {
-  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background:
+    radial-gradient(
+      circle at 50% 20%,
+      rgba(255, 42, 161, 0.06),
+      transparent 32rem
+    ),
+    var(--ink);
 }
 
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
+.eyebrow {
+  display: block;
+  color: var(--cyan);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
 }
 
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
+/* Chromatic pink/cyan offset used on the big display headings */
+.glitch {
+  font-family: var(--display);
+  font-weight: 900;
+  font-style: italic;
+  text-transform: uppercase;
+  paint-order: stroke fill;
+  -webkit-text-stroke: 1.5px currentColor;
+  text-shadow:
+    3px 0 0 var(--pink),
+    -3px 0 0 var(--cyan);
 }
 
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
+/* Faint dot texture behind a full-width section */
+.halftone {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+
+  &::before {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    opacity: 0.19;
+    background-image: radial-gradient(var(--paper) 0.8px, transparent 0.8px);
+    background-size: 5px 5px;
+    content: '';
+    pointer-events: none;
   }
 }
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
+
+.section-heading {
+  max-width: 1200px;
+  margin: 0 auto 4rem;
+
+  h2 {
+    font-size: clamp(3.25rem, 6.5vw, 5.5rem);
+    line-height: 0.85;
+    letter-spacing: -0.025em;
+
+    @media (max-width: 560px) {
+      font-size: 3.3rem;
+    }
   }
 }
-p {
-  margin: 0;
-}
 
-code,
-.counter {
-  font-family: var(--mono);
+.comic-button {
   display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
+  min-height: 47px;
+  align-items: center;
+  justify-content: center;
+  gap: 1.4rem;
+  padding: 0.75rem 1.1rem;
+  border: 2px solid var(--paper);
+  box-shadow: 5px 5px 0 var(--cyan);
+  color: var(--ink);
+  background: var(--paper);
+  font-family: var(--display);
+  font-size: 0.92rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transform: skew(-3deg);
+  transition: 150ms ease;
+
+  &:hover {
+    box-shadow: 2px 2px 0 var(--cyan);
+    transform: translate(3px, 3px) skew(-3deg);
+  }
+
+  &.yellow {
+    border-color: var(--yellow);
+    background: var(--yellow);
+    box-shadow: 5px 5px 0 var(--pink);
+  }
+
+  &.outline {
+    border-color: var(--cyan);
+    box-shadow: 5px 5px 0 var(--pink);
+    color: var(--paper);
+    background: var(--ink);
+  }
 }
 
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+/* Stop the page scrolling behind an open dialog */
+body:has(dialog[open]) {
+  overflow: hidden;
 }

@@ -1,0 +1,80 @@
+.resume-modal {
+  width: min(700px, 72vw);
+  max-width: none;
+  height: min(84vh, 980px);
+  max-height: none;
+  /* The reset zeroes margins, and a dialog needs auto margins to centre */
+  margin: auto;
+  overflow: visible;
+  border: 2px solid var(--pink);
+  color: var(--paper);
+  background: var(--paper);
+  box-shadow: 8px 8px 0 rgba(69, 223, 245, 0.45);
+
+  &::backdrop {
+    background: rgba(8, 8, 11, 0.82);
+  }
+
+  @media (max-width: 560px) {
+    width: calc(100vw - 2rem);
+    height: 80dvh;
+    box-shadow: 5px 5px 0 rgba(69, 223, 245, 0.45);
+  }
+
+  iframe {
+    width: 100%;
+    height: 100%;
+    background: var(--paper);
+  }
+}
+
+.resume-modal-panel {
+  position: relative;
+  height: 100%;
+  padding: 9px;
+
+  @media (max-width: 560px) {
+    padding: 5px;
+  }
+}
+
+/* Download and close sit just above the top-right corner of the panel */
+.resume-modal-actions {
+  position: absolute;
+  top: -48px;
+  right: -2px;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  a {
+    padding: 0.45rem 0.7rem;
+    border: 1px solid var(--pink);
+    background: var(--ink);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+
+    &:hover {
+      color: var(--ink);
+      background: var(--pink);
+    }
+  }
+
+  button {
+    display: grid;
+    width: 42px;
+    aspect-ratio: 1;
+    place-items: center;
+    color: var(--pink);
+    background: var(--ink);
+    font-size: 2.25rem;
+    line-height: 1;
+    cursor: pointer;
+
+    &:hover {
+      color: var(--cyan);
+    }
+  }
+}

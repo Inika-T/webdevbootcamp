@@ -1,0 +1,142 @@
+.contact-page {
+  display: grid;
+  min-height: calc(100vh - 78px);
+  grid-template-columns: minmax(330px, 0.82fr) minmax(420px, 1.18fr);
+  align-items: center;
+  gap: 5vw;
+  padding: 5rem max(5vw, 2rem) 6rem;
+
+  @media (max-width: 850px) {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    padding-inline: max(4vw, 1.5rem);
+    padding-block: 5rem 8rem;
+  }
+
+  @media (max-width: 560px) {
+    padding-inline: 1.25rem;
+  }
+
+  h1 {
+    margin-top: 0.25rem;
+    font-size: clamp(4rem, 7vw, 6.5rem);
+    line-height: 0.85;
+    letter-spacing: -0.025em;
+
+    @media (max-width: 850px) {
+      font-size: clamp(4rem, 14vw, 6rem);
+    }
+  }
+}
+
+.contact-details {
+  position: relative;
+  z-index: 2;
+  max-width: 560px;
+
+  @media (max-width: 850px) {
+    max-width: 620px;
+  }
+}
+
+.contact-rule {
+  width: min(270px, 75%);
+  height: 2px;
+  margin: 1.5rem 0 2.2rem;
+  background: var(--pink);
+
+  &.short {
+    width: 150px;
+    margin: 0.7rem 0 1.25rem;
+  }
+}
+
+.contact-lines {
+  display: grid;
+  gap: 1.15rem;
+
+  a {
+    display: grid;
+    grid-template-columns: 125px 1fr;
+    gap: 0.75rem;
+    font-size: 0.96rem;
+    overflow-wrap: anywhere;
+
+    @media (max-width: 560px) {
+      grid-template-columns: 1fr;
+      gap: 0.15rem;
+    }
+  }
+
+  span {
+    color: var(--pink);
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+}
+
+.social-list {
+  margin-top: 3rem;
+
+  h2 {
+    font-family: var(--display);
+    font-size: 2.5rem;
+    font-weight: 900;
+    line-height: 1.2;
+    letter-spacing: 0.05em;
+    text-shadow:
+      2px 0 var(--pink),
+      -2px 0 var(--cyan);
+  }
+
+  > a {
+    display: grid;
+    grid-template-columns: 120px 1fr auto;
+    align-items: center;
+    gap: 0.75rem;
+    max-width: 480px;
+    padding: 0.65rem 0;
+    border-bottom: 1px solid rgba(240, 237, 228, 0.15);
+
+    @media (max-width: 560px) {
+      grid-template-columns: 90px 1fr auto;
+    }
+
+    span {
+      color: var(--pink);
+      font-size: 0.94rem;
+      font-weight: 700;
+    }
+
+    b {
+      font-size: 0.9rem;
+      font-weight: 400;
+    }
+
+    i {
+      color: var(--cyan);
+      font-style: normal;
+      transition: transform 150ms ease;
+    }
+
+    &:hover i {
+      transform: translate(3px, -3px);
+    }
+  }
+}
+
+.contact-art {
+  z-index: 2;
+  width: min(112%, 820px);
+  max-width: none;
+  justify-self: end;
+
+  @media (max-width: 850px) {
+    width: min(92%, 650px);
+    justify-self: center;
+  }
+
+  @media (max-width: 560px) {
+    display: none;
+  }
+}
