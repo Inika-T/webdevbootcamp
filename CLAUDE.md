@@ -2,7 +2,18 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Layout
+
+The repo has two apps, each run from its own folder (in separate terminals):
+
+- `frontend/` — the React site. All frontend paths below are relative to this folder.
+- `backend/` — a FastAPI app (Python, managed with `uv`). The app is in `backend/main.py`.
+
+GitHub Pages deploys `frontend/` only (`.github/workflows/deploy.yml`).
+
 ## Commands
+
+### Frontend (run in `frontend/`)
 
 The package manager is Bun (`bun.lock` is the only lockfile) — use `bun`, not `npm`/`yarn`/`pnpm`.
 
@@ -13,6 +24,11 @@ The package manager is Bun (`bun.lock` is the only lockfile) — use `bun`, not 
 - `bun run lint` — ESLint over the repo (`bunx eslint src/App.jsx` for a single file)
 
 There is no test runner configured.
+
+### Backend (run in `backend/`)
+
+- `uv run fastapi dev` — dev server with auto-reload at http://127.0.0.1:8000 (interactive API docs at `/docs`)
+- `uv add <package>` — add a Python dependency
 
 ## Architecture
 
