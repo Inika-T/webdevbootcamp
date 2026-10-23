@@ -1,3 +1,4 @@
+import ContactForm from '../components/ContactForm.jsx'
 import { emails, socials } from '../data/contact.js'
 import { publicUrl } from '../publicUrl.js'
 import './Contact.css'
@@ -35,6 +36,8 @@ function Contact() {
             </a>
           ))}
         </div>
+
+        <ContactForm />
       </div>
 
       <img
