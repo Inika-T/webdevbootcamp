@@ -136,6 +136,23 @@ def update_project(project_id: int, update: ProjectIn) -> Project:
     return updated
 
 
+@app.post("/projects", status_code=201)
+def create_project(new_project: ProjectIn) -> Project:
+    """Add a new project and return it with its new id. 422 if the data is invalid."""
+    next_id = max((p.id for p in projects_db), default=0) + 1
+    project = Project(id=next_id, **new_project.model_dump())
+    projects_db.append(project)
+    return project
+
+
+@app.delete("/projects/{project_id}")
+def delete_project(project_id: int) -> Project:
+    """Remove a project and return what was deleted. 404 if it doesn't exist."""
+    project = find_project(project_id)
+    projects_db.remove(project)
+    return project
+
+
 @app.post("/messages", status_code=201)
 def create_message(new_message: MessageIn) -> Message:
     """Save a contact form message and return it with its new id. 422 if invalid."""
