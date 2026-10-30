@@ -1,0 +1,47 @@
+.project-form {
+  display: grid;
+  gap: 1.1rem;
+  max-width: 640px;
+  margin-bottom: 2rem;
+  padding: clamp(1.25rem, 4vw, 2rem);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--gold);
+  border-radius: 18px;
+  background: var(--white);
+  box-shadow: var(--shadow);
+
+  h3 {
+    font-family: var(--serif);
+    font-size: 1.65rem;
+    font-weight: 400;
+  }
+
+  label {
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  label span {
+    color: var(--navy-700);
+    font-size: 0.88rem;
+    font-weight: 500;
+  }
+
+  input,
+  textarea,
+  select {
+    background: var(--cloud);
+  }
+}
+
+.project-form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.project-form-error {
+  color: #a3405a;
+  overflow-wrap: anywhere;
+}

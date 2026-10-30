@@ -1,227 +1,281 @@
 .work-section {
-  padding: 5.5rem max(5vw, 2rem) 7rem;
-
-  @media (max-width: 560px) {
-    padding-inline: 1.25rem;
-  }
+  padding: clamp(5rem, 10vw, 8rem) var(--band-pad);
+  background: linear-gradient(180deg, var(--white), var(--mist));
 }
 
-.cityscape {
-  position: absolute;
-  z-index: -1;
-  inset: auto 0 0;
-  width: 100%;
-  max-width: none;
-  height: 54%;
-  object-fit: cover;
-  object-position: center bottom;
-  opacity: 0.2;
-  filter: saturate(1.35) contrast(1.1)
-    drop-shadow(7px 0 0 rgba(255, 42, 161, 0.38));
-  mask-image: linear-gradient(to bottom, transparent, black 38%);
+.project-status {
+  margin-bottom: 2rem;
+  color: var(--muted);
 }
 
+/* Two columns, with every second card stepped down for rhythm */
 .project-list {
-  position: relative;
-  z-index: 2;
-  max-width: 1200px;
-  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: 2.5rem clamp(1.5rem, 4vw, 3.5rem);
+
+  @media (max-width: 760px) {
+    grid-template-columns: 1fr;
+  }
 }
 
 .project-card {
-  display: grid;
-  grid-template-columns: 55px minmax(230px, 0.8fr) 1fr 60px;
-  align-items: center;
-  gap: clamp(1.5rem, 4vw, 4rem);
-  padding: 2rem 0;
-  border-top: 1px solid var(--line);
-  transition:
-    background 180ms ease,
-    padding 180ms ease;
+  /* Each project's colour from the backend picks a cover gradient */
+  --cover-from: var(--navy-700);
+  --cover-to: var(--navy-900);
+  --accent: var(--blue-600);
 
-  &:last-child {
-    border-bottom: 1px solid var(--line);
-  }
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    'preview preview preview'
+    'number info link';
+  align-items: start;
+  gap: 1.5rem 1.25rem;
+  padding: 1rem 1rem 1.75rem;
+  border-radius: 22px;
+  background: var(--white);
+  box-shadow: var(--shadow);
+  transition: box-shadow 250ms ease;
 
   &:hover {
-    padding-inline: 1rem;
-    background: rgba(255, 255, 255, 0.035);
+    box-shadow: 0 30px 60px -28px rgba(15, 31, 61, 0.45);
   }
 
-  /* The card's accent colour; children pick it up through currentColor */
+  /* Every second card starts lower, for a staggered gallery */
+  &:nth-child(even) {
+    margin-top: 5rem;
+  }
+
   &.pink {
-    color: var(--pink);
+    --cover-from: var(--navy-700);
+    --cover-to: var(--navy-900);
+    --accent: var(--navy-700);
   }
 
   &.cyan {
-    color: var(--cyan);
+    --cover-from: var(--teal-500);
+    --cover-to: var(--teal-700);
+    --accent: var(--teal-500);
   }
 
   &.yellow {
-    color: var(--yellow);
+    --cover-from: var(--blue-400);
+    --cover-to: var(--blue-600);
+    --accent: var(--blue-600);
   }
 
-  @media (max-width: 850px) {
-    grid-template-columns: 45px 1fr 48px;
+  @media (max-width: 760px) {
+    &:nth-child(even) {
+      margin-top: 0;
+    }
   }
 
-  @media (max-width: 560px) {
-    grid-template-columns: 35px 1fr;
+  /* Narrow screens: number and link share a row, text gets the full width */
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      'preview preview'
+      'number link'
+      'info info';
     gap: 1rem;
+    padding-inline: 0.75rem;
+
+    .project-number,
+    .project-info {
+      padding-left: 0.5rem;
+    }
   }
 }
 
 .project-number {
-  color: var(--dim);
-  font-family: var(--display);
-  font-size: 2rem;
-  font-weight: 800;
+  grid-area: number;
+  padding-left: 0.75rem;
+  color: var(--gold);
+  font-family: var(--serif);
+  font-size: 1.9rem;
+  font-weight: 300;
+  line-height: 1.2;
 }
 
+/* A cover in the project's colours with gold line-work */
 .project-preview {
   position: relative;
-  aspect-ratio: 16 / 9;
+  grid-area: preview;
+  aspect-ratio: 16 / 10;
   overflow: hidden;
-  border: 1px solid #666;
+  border-radius: 14px;
   background:
-    linear-gradient(145deg, rgba(255, 255, 255, 0.08), transparent), #16151c;
-  transform: rotate(-1.5deg);
-
-  @media (max-width: 850px) {
-    display: none;
-  }
-
-  &::after {
-    position: absolute;
-    inset: 0;
-    opacity: 0.55;
-    background: radial-gradient(circle, currentColor 1px, transparent 1.4px) 0
-      0 / 8px 8px;
-    content: '';
-  }
+    radial-gradient(
+      circle at 78% 22%,
+      rgba(255, 255, 255, 0.22),
+      transparent 40%
+    ),
+    linear-gradient(150deg, var(--cover-from), var(--cover-to));
 
   > span {
     position: absolute;
     z-index: 2;
-    top: 12px;
-    left: 12px;
-    padding: 0.2rem 0.4rem;
-    background: currentColor;
-    font-size: 0.52rem;
-    font-weight: 700;
-    /* Dark label text on the accent-coloured chip */
-    -webkit-text-fill-color: var(--ink);
+    top: 14px;
+    left: 14px;
+    padding: 0.25rem 0.7rem;
+    border-radius: 999px;
+    color: var(--navy-900);
+    background: var(--white);
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
   }
 }
 
 .preview-orbit {
   position: absolute;
-  top: 20%;
-  left: 32%;
-  width: 42%;
+  top: 22%;
+  left: 34%;
+  width: 36%;
   aspect-ratio: 1;
-  border: 12px solid currentColor;
+  border: 1px solid var(--gold-light);
   border-radius: 50%;
-  box-shadow: 35px 15px 0 -20px var(--paper);
+  transition: transform 600ms ease;
+
+  /* A smaller ring offset inside the first */
+  &::after {
+    position: absolute;
+    inset: 18% 8% 8% 18%;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 50%;
+    content: '';
+  }
 }
 
 .preview-grid {
   position: absolute;
   right: 10%;
-  bottom: -30%;
-  width: 35%;
+  bottom: -16%;
+  width: 30%;
   aspect-ratio: 1;
-  border: 2px solid var(--paper);
-  transform: rotate(25deg);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 8px;
+  transform: rotate(20deg);
+  transition: transform 600ms ease;
+}
+
+/* On hover the cover's line-work turns gently */
+.project-card:hover {
+  .preview-orbit {
+    transform: rotate(-25deg) scale(1.04);
+  }
+
+  .preview-grid {
+    transform: rotate(35deg);
+  }
 }
 
 .project-info {
+  grid-area: info;
+
   .eyebrow {
-    color: currentColor;
+    color: var(--accent);
   }
 
   h3 {
-    margin: 0.35rem 0 0.4rem;
-    color: var(--paper);
-    font-size: clamp(1.8rem, 3vw, 2.7rem);
-    font-weight: 800;
-    line-height: 1;
-    letter-spacing: 0.01em;
-
-    @media (max-width: 560px) {
-      font-size: 2.4rem;
-    }
+    margin: 0.35rem 0 0.6rem;
+    font-size: clamp(1.75rem, 2.8vw, 2.25rem);
+    font-weight: 400;
+    line-height: 1.1;
   }
 
   p {
-    max-width: 500px;
-    color: var(--paper);
-    font-size: 0.82rem;
-    line-height: 1.7;
+    color: var(--muted);
+    font-size: 0.98rem;
   }
 
   ul {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: 0.45rem;
     margin-top: 1rem;
   }
 
   li {
-    padding: 0.25rem 0.5rem;
-    border: 1px solid #555;
-    color: #bbb;
-    font-size: 0.55rem;
-    text-transform: uppercase;
+    padding: 0.2rem 0.7rem;
+    border-radius: 999px;
+    color: var(--navy-800);
+    background: var(--mist);
+    font-size: 0.8rem;
   }
 }
 
 .project-link {
   display: grid;
-  width: 46px;
+  grid-area: link;
+  width: 44px;
   aspect-ratio: 1;
+  margin-right: 0.5rem;
   place-items: center;
-  border: 1px solid currentColor;
+  border: 1px solid var(--line);
   border-radius: 50%;
-  font-size: 1.4rem;
-  transition: 150ms ease;
+  color: var(--navy-900);
+  font-size: 1.1rem;
+  transition:
+    background 200ms ease,
+    border-color 200ms ease,
+    color 200ms ease;
 
   &:hover {
-    background: currentColor;
-    -webkit-text-fill-color: var(--ink);
-  }
-
-  @media (max-width: 850px) {
-    width: 42px;
-  }
-
-  @media (max-width: 560px) {
-    grid-column: 2;
-    justify-self: start;
+    border-color: var(--accent);
+    color: var(--white);
+    background: var(--accent);
   }
 }
 
 .resume-actions {
   display: flex;
-  max-width: 1200px;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 1.5rem;
-  margin: 4rem auto 0;
+  gap: 1rem;
+  margin-top: clamp(3rem, 6vw, 4.5rem);
 
-  .comic-button {
-    min-width: 230px;
-    min-height: 62px;
-    padding: 1rem 1.5rem;
-    font-size: 1.08rem;
+  .button {
+    min-width: 220px;
   }
 
   @media (max-width: 560px) {
-    align-items: stretch;
     flex-direction: column;
+  }
+}
 
-    .comic-button {
-      width: 100%;
+/* Tilt toward the mouse (values set in Projects.jsx). The card leans in 3D
+   and the cover's rings and square drift in opposite directions. */
+@media (prefers-reduced-motion: no-preference) and (hover: hover) {
+  .project-card {
+    transform: perspective(1100px) rotateX(var(--tilt-x, 0deg))
+      rotateY(var(--tilt-y, 0deg));
+    transition:
+      transform 500ms cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 250ms ease;
+
+    &:hover {
+      transition:
+        transform 120ms linear,
+        box-shadow 250ms ease;
     }
+  }
+
+  .preview-orbit,
+  .preview-grid {
+    transition:
+      transform 600ms ease,
+      translate 300ms ease-out;
+  }
+
+  .preview-orbit {
+    translate: var(--shift-x, 0) var(--shift-y, 0);
+  }
+
+  .preview-grid {
+    translate: calc(var(--shift-x, 0px) * -0.7)
+      calc(var(--shift-y, 0px) * -0.7);
   }
 }

@@ -1,15 +1,29 @@
 import { Link } from 'react-router'
 import './Hero.css'
 
+const nameLines = ['INIKA', 'TALATI']
+
 function Hero() {
   return (
-    <section className="hero halftone">
+    <section className="hero">
       <div className="hero-copy">
         <p className="eyebrow">HELLO, I&apos;M</p>
-        <h1 className="glitch">
-          INIKA
-          <br />
-          TALATI
+        {/* Each letter is its own span so the name can rise in letter by
+            letter; screen readers read the label instead. */}
+        <h1 className="display hero-name" aria-label="INIKA TALATI">
+          {nameLines.map((line, lineIndex) => (
+            <span className="name-line" key={line} aria-hidden="true">
+              {[...line].map((letter, index) => (
+                <span
+                  className="name-letter"
+                  key={index}
+                  style={{ '--i': lineIndex * 5 + index }}
+                >
+                  {letter}
+                </span>
+              ))}
+            </span>
+          ))}
         </h1>
         <p className="hero-intro">
           Hi! I&apos;m a Computer Science and Info Design double major at the
@@ -34,12 +48,6 @@ function Hero() {
             <span>DROP YOUR PHOTO HERE</span>
           </div>
         </div>
-        <span className="sfx">THWIP!</span>
-        <span className="issue-stamp">
-          ISSUE
-          <br />
-          001
-        </span>
       </div>
 
       <div className="scroll-cue">

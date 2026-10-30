@@ -1,10 +1,16 @@
-// Sends a contact message to the backend.
-// Not hooked up yet: the FastAPI POST /messages endpoint will live here later.
-// When it does, replace the body with a fetch() call and return the saved
-// message. ContactForm already shows a "sent" state when this resolves.
-export async function sendMessage({ name, email, message }) {
-  void name
-  void email
-  void message
-  throw new Error('Messages are not switched on yet.')
+import { request } from './client.js'
+
+// One function per /messages endpoint in backend/main.py.
+
+// Saves a contact form message and returns it with its new id.
+export function sendMessage({ name, email, message }) {
+  return request('/messages', {
+    method: 'POST',
+    body: { name, email, message },
+  })
+}
+
+// Returns every message, newest first.
+export function listMessages() {
+  return request('/messages')
 }

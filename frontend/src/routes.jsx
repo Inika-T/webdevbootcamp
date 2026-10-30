@@ -1,5 +1,6 @@
 import { createBrowserRouter } from 'react-router'
 import Layout from './components/Layout.jsx'
+import Admin from './pages/Admin.jsx'
 import Contact from './pages/Contact.jsx'
 import Home from './pages/Home.jsx'
 
@@ -12,6 +13,7 @@ export const router = createBrowserRouter(
       children: [
         { index: true, Component: Home },
         { path: 'contact', Component: Contact },
+        { path: 'admin', Component: Admin },
       ],
     },
   ],

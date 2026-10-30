@@ -1,4 +1,5 @@
 import { NavLink, Outlet, ScrollRestoration } from 'react-router'
+import Cursor from './Cursor.jsx'
 import './Layout.css'
 
 function Layout() {
@@ -29,6 +30,7 @@ function Layout() {
         <a href="#main">Back to top ↑</a>
       </footer>
       <ScrollRestoration />
+      <Cursor />
     </div>
   )
 }

@@ -70,7 +70,7 @@ function ContactForm() {
       </label>
 
       <button
-        className="comic-button yellow"
+        className="button"
         type="submit"
         disabled={status === 'sending'}
       >
@@ -81,7 +81,7 @@ function ContactForm() {
         {status === 'sent' && 'Thanks! Your message was sent.'}
         {status === 'error' && (
           <>
-            Messages aren&apos;t switched on yet. Email me at{' '}
+            Sorry, your message didn&apos;t send. Try again, or email me at{' '}
             <a href={`mailto:${emails[0].address}`}>{emails[0].address}</a>{' '}
             instead.
           </>

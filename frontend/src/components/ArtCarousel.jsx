@@ -14,16 +14,11 @@ function ArtCarousel() {
   }
 
   return (
-    <section className="art-section halftone" id="art">
-      <img
-        className="art-cityscape"
-        src={publicUrl('/images/city-art-section.webp')}
-        alt=""
-      />
-      <div className="section-heading">
-        <h2 className="glitch">ARTWORK</h2>
+    <section className="art-section" id="art">
+      <div className="section-heading reveal">
+        <h2 className="display">ARTWORK</h2>
       </div>
-      <div className="art-frame-wrap">
+      <div className="art-frame-wrap reveal">
         <button
           className="art-side-button previous"
           type="button"

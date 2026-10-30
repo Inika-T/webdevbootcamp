@@ -2,9 +2,25 @@ from datetime import datetime, timezone
 from typing import Literal
 
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, EmailStr, Field
 
 app = FastAPI()
+
+# Browsers only let a page call a server on a different address if the server
+# says so. These are the addresses the React dev server (`bun run dev`) and
+# preview server (`bun run preview`) run on.
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+        "http://localhost:4173",
+        "http://127.0.0.1:4173",
+    ],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 # ---------- Data models ----------
@@ -82,22 +98,7 @@ projects_db: list[Project] = [
     ),
 ]
 
-messages_db: list[Message] = [
-    Message(
-        id=1,
-        name="Sam Rivera",
-        email="sam@example.com",
-        message="Loved the Playlist Creator! Is it open source?",
-        created_at=datetime(2026, 10, 20, 14, 30, tzinfo=timezone.utc),
-    ),
-    Message(
-        id=2,
-        name="Jordan Lee",
-        email="jordan@example.com",
-        message="Hi Inika, are you open to a UI/UX internship next summer?",
-        created_at=datetime(2026, 10, 22, 9, 15, tzinfo=timezone.utc),
-    ),
-]
+messages_db: list[Message] = []
 
 
 def find_project(project_id: int) -> Project:
