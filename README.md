@@ -15,10 +15,11 @@ The React frontend calls every endpoint in the FastAPI backend (`backend/main.py
 | `POST /projects` | **Admin** — the "Add project" form |
 | `PUT /projects/{id}` | **Admin** — saving an edited project |
 | `DELETE /projects/{id}` | **Admin** — the Delete button |
+| `POST /projects/reset` | **Admin** — the "Reset projects" button (puts the starting projects back) |
 | `POST /messages` | **Contact** — the contact form |
 | `GET /messages` | **Admin** — the Messages list |
 
-**Admin page:** http://localhost:5173/admin (not linked in the menu, no login). It's where projects are added, edited and deleted and where contact messages show up. To try it: run both parts (below), add or edit a project on `/admin`, then check that Home shows the change; send a message from Contact and see it appear on `/admin`.
+**Admin page:** http://localhost:5173/admin (not linked in the menu). Password: `admin` (change it by setting the `ADMIN_PASSWORD` environment variable before starting the backend). Adding, editing and deleting projects and reading messages need the password; the public pages don't. It's where projects are added, edited and deleted and where contact messages show up. To try it: run both parts (below), add or edit a project on `/admin`, then check that Home shows the change; send a message from Contact and see it appear on `/admin`.
 
 The backend keeps data in memory, so restarting it resets the projects and clears messages.
 

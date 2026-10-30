@@ -23,3 +23,9 @@ export function updateProject(id, project) {
 export function deleteProject(id) {
   return request(`/projects/${id}`, { method: 'DELETE' })
 }
+
+// Puts back the starting projects (undoing every add, edit and delete) and
+// returns them.
+export function resetProjects() {
+  return request('/projects/reset', { method: 'POST' })
+}

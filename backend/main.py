@@ -1,7 +1,10 @@
+import os
+import secrets
+from copy import deepcopy
 from datetime import datetime, timezone
 from typing import Literal
 
-from fastapi import FastAPI, HTTPException
+from fastapi import Depends, FastAPI, Header, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, EmailStr, Field
 
@@ -21,6 +24,22 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+# ---------- Admin password ----------
+# The /admin page sends this in an `X-Admin-Password` header. Set the
+# ADMIN_PASSWORD environment variable to use a different one.
+ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "admin")
+
+
+def require_admin(x_admin_password: str | None = Header(default=None)) -> None:
+    """Stop with a 401 error unless the request has the right admin password."""
+    # compare_digest takes the same time whether or not the start matches,
+    # so the password can't be guessed one letter at a time.
+    if x_admin_password is None or not secrets.compare_digest(
+        x_admin_password.encode(), ADMIN_PASSWORD.encode()
+    ):
+        raise HTTPException(status_code=401, detail="Wrong password")
 
 
 # ---------- Data models ----------
@@ -60,7 +79,8 @@ class Message(MessageIn):
 # ---------- In-memory "database" ----------
 # These are plain Python lists. Changes are lost when the server restarts.
 
-projects_db: list[Project] = [
+# The starting projects. POST /projects/reset puts these back.
+DEFAULT_PROJECTS: list[Project] = [
     Project(
         id=1,
         type="DEVELOPMENT",
@@ -98,6 +118,8 @@ projects_db: list[Project] = [
     ),
 ]
 
+projects_db: list[Project] = deepcopy(DEFAULT_PROJECTS)
+
 messages_db: list[Message] = []
 
 
@@ -110,6 +132,12 @@ def find_project(project_id: int) -> Project:
 
 
 # ---------- Endpoints ----------
+
+@app.get("/admin/check", dependencies=[Depends(require_admin)])
+def check_admin():
+    """Lets the /admin page check a password. 401 if it's wrong."""
+    return {"ok": True}
+
 
 @app.get("/")
 def main():
@@ -128,7 +156,7 @@ def get_project(project_id: int) -> Project:
     return find_project(project_id)
 
 
-@app.put("/projects/{project_id}")
+@app.put("/projects/{project_id}", dependencies=[Depends(require_admin)])
 def update_project(project_id: int, update: ProjectIn) -> Project:
     """Replace a project's details. 404 if it doesn't exist, 422 if the data is invalid."""
     project = find_project(project_id)
@@ -137,7 +165,7 @@ def update_project(project_id: int, update: ProjectIn) -> Project:
     return updated
 
 
-@app.post("/projects", status_code=201)
+@app.post("/projects", status_code=201, dependencies=[Depends(require_admin)])
 def create_project(new_project: ProjectIn) -> Project:
     """Add a new project and return it with its new id. 422 if the data is invalid."""
     next_id = max((p.id for p in projects_db), default=0) + 1
@@ -146,7 +174,14 @@ def create_project(new_project: ProjectIn) -> Project:
     return project
 
 
-@app.delete("/projects/{project_id}")
+@app.post("/projects/reset", dependencies=[Depends(require_admin)])
+def reset_projects() -> list[Project]:
+    """Undo all project changes: put back the starting projects and return them."""
+    projects_db[:] = deepcopy(DEFAULT_PROJECTS)
+    return projects_db
+
+
+@app.delete("/projects/{project_id}", dependencies=[Depends(require_admin)])
 def delete_project(project_id: int) -> Project:
     """Remove a project and return what was deleted. 404 if it doesn't exist."""
     project = find_project(project_id)
@@ -167,7 +202,7 @@ def create_message(new_message: MessageIn) -> Message:
     return message
 
 
-@app.get("/messages")
+@app.get("/messages", dependencies=[Depends(require_admin)])
 def list_messages() -> list[Message]:
     """Return every message, newest first."""
     return sorted(messages_db, key=lambda m: m.created_at, reverse=True)
