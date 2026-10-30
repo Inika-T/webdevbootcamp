@@ -4,6 +4,24 @@ A two-page personal site (Home and Contact) built with React and Vite, based on 
 
 **Live site:** https://inika-t.github.io/webdevbootcamp/
 
+## API + Frontend: where each endpoint is used
+
+The React frontend calls every endpoint in the FastAPI backend (`backend/main.py`). All requests go through `frontend/src/api/`; components never call `fetch` directly.
+
+| Endpoint | Where in the UI |
+| --- | --- |
+| `GET /projects` | **Home** — the Projects section, and the project list on **Admin** |
+| `GET /projects/{id}` | **Admin** — clicking Edit loads that project into the form |
+| `POST /projects` | **Admin** — the "Add project" form |
+| `PUT /projects/{id}` | **Admin** — saving an edited project |
+| `DELETE /projects/{id}` | **Admin** — the Delete button |
+| `POST /messages` | **Contact** — the contact form |
+| `GET /messages` | **Admin** — the Messages list |
+
+**Admin page:** http://localhost:5173/admin (not linked in the menu, no login). It's where projects are added, edited and deleted and where contact messages show up. To try it: run both parts (below), add or edit a project on `/admin`, then check that Home shows the change; send a message from Contact and see it appear on `/admin`.
+
+The backend keeps data in memory, so restarting it resets the projects and clears messages.
+
 ## Run it locally
 
 The site has two parts that run side by side, each in its own terminal.
@@ -25,13 +43,7 @@ bun install
 bun run dev
 ```
 
-Then open http://localhost:5173.
-
-- **Home** lists projects from `GET /projects`.
-- **Contact** sends the form to `POST /messages`.
-- **http://localhost:5173/admin** (not linked in the menu) adds, edits and deletes projects (`POST`, `GET /projects/{id}` + `PUT`, `DELETE`) and lists messages (`GET /messages`).
-
-The backend keeps data in memory, so restarting it resets the projects and clears messages.
+Then open http://localhost:5173 (and http://localhost:5173/admin for the admin page).
 
 ## Other commands (in `frontend/`)
 
@@ -44,11 +56,11 @@ The backend keeps data in memory, so restarting it resets the projects and clear
 - `backend/main.py` — the API: projects and contact messages
 - `frontend/src/api/` — one function per API endpoint
 - `frontend/src/pages/` — the Home, Contact and Admin pages
-- `frontend/src/components/` — page sections (hero, projects, art carousel, resume preview), the shared top bar and footer, the custom cursor and decorative graphics
+- `frontend/src/components/` — page sections (hero, projects, art carousel, resume preview), the project form used on Admin, and the shared top bar and footer
 - `frontend/src/data/` — artwork slides and contact links
 - `frontend/src/index.css` — colors, fonts and shared styles
 - `frontend/public/images/` — images used by the site
 
 ## Deployment
 
-Every push to `main` rebuilds the frontend and publishes it to GitHub Pages (see `.github/workflows/deploy.yml`). GitHub Pages can't run the Python backend, so the live site shows a "couldn't load" message for projects; run both parts locally to see everything working.
+Every push to `main` rebuilds the frontend and publishes it to GitHub Pages (see `.github/workflows/deploy.yml`). GitHub Pages can't run the Python backend, so on the live site projects show a "couldn't load" message and the contact form can't send; run both parts locally to see everything working.
