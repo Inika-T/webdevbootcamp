@@ -15,6 +15,11 @@ export const socials = [
     href: 'https://www.linkedin.com/in/inikatalati/',
   },
   {
+    label: 'GitHub',
+    handle: '@Inika-T',
+    href: 'https://github.com/Inika-T',
+  },
+  {
     label: 'YouTube',
     handle: '@rogueskyee',
     href: 'https://www.youtube.com/@rogueskyee',

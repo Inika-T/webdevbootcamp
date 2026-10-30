@@ -78,7 +78,7 @@ function Admin() {
   return (
     <section className="admin-page">
       <span className="eyebrow">BEHIND THE SCENES</span>
-      <h1 className="display">ADMIN</h1>
+      <h1 className="glitch">ADMIN</h1>
 
       {status === 'loading' && <p className="admin-note">Loading…</p>}
       {error && (
@@ -93,7 +93,7 @@ function Admin() {
             <h2>PROJECTS</h2>
             {editing === null && (
               <button
-                className="button"
+                className="comic-button yellow"
                 type="button"
                 onClick={() => setEditing('new')}
               >

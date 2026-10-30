@@ -1,51 +1,24 @@
-/* Design tokens: navies and teals with a gold accent. */
 :root {
-  /* Whites */
-  --white: #ffffff;
-  --cloud: #f7f9fc; /* page background */
-  --mist: #eaf0f6; /* tinted sections and panels */
+  --ink: #08080b;
+  --paper: #f0ede4;
+  --pink: #ff2aa1;
+  --cyan: #45dff5;
+  --yellow: #f5ee4a;
+  --purple: #9d4edd;
+  --muted: #bdb9b5;
+  --dim: #777;
+  --line: rgba(240, 237, 228, 0.18);
 
-  /* Blues, lightest first */
-  --blue-200: #c6d7ea;
-  --blue-400: #7e9fc4;
-  --blue-600: #3f6898;
+  --display: 'Barlow Condensed', Impact, sans-serif;
+  --label: 'Abel', sans-serif;
+  --mono: 'Anonymous Pro', monospace;
 
-  /* Navies */
-  --navy-700: #213d68;
-  --navy-800: #182d50;
-  --navy-900: #0f1f3d; /* main text and dark bands */
-
-  /* Teals */
-  --teal-200: #c4e3df;
-  --teal-500: #2c8288;
-  --teal-700: #1b5a62;
-
-  /* Gold accent */
-  --gold: #c9a24d;
-  --gold-light: #ead197;
-
-  /* Text */
-  --ink: var(--navy-900);
-  --muted: #56677f;
-  --line: rgba(15, 31, 61, 0.12);
-
-  --shadow: 0 24px 48px -28px rgba(15, 31, 61, 0.35);
-
-  --serif: 'Newsreader', Georgia, serif;
-  --sans: 'Instrument Sans', system-ui, sans-serif;
-
-  --page-width: 1180px;
-  --gutter: clamp(1.25rem, 5vw, 3rem);
-  /* Side padding that keeps content centred in a full-width band */
-  --band-pad: max(var(--gutter), (100% - var(--page-width)) / 2);
-
-  color: var(--ink);
-  background: var(--cloud);
-  font-family: var(--sans);
-  font-size: 1.0625rem;
-  line-height: 1.6;
+  color-scheme: dark;
+  color: var(--paper);
+  background: var(--ink);
+  font-family: var(--mono);
+  line-height: 1.5;
   font-synthesis: none;
-  -webkit-font-smoothing: antialiased;
 }
 
 /* Reset browser defaults so every element starts from the same baseline */
@@ -90,16 +63,42 @@ button {
   color: inherit;
   background: transparent;
   font: inherit;
-  cursor: pointer;
 }
 
 html {
   scroll-behavior: smooth;
-  background: var(--cloud);
-  scrollbar-color: var(--blue-400) var(--cloud);
+  background: var(--ink);
 
   @media (prefers-reduced-motion: reduce) {
     scroll-behavior: auto;
+  }
+}
+
+/* Hairline scrollbar with a cyan-to-pink thumb (Chrome, Edge, Safari) */
+::-webkit-scrollbar {
+  width: 2px;
+  height: 2px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--ink);
+}
+
+::-webkit-scrollbar-thumb {
+  border-block: 2px solid var(--ink);
+  background: linear-gradient(var(--cyan), var(--pink));
+
+  &:hover {
+    background: var(--yellow);
+  }
+}
+
+/* Firefox has no gradient scrollbars, so it gets a thin pink one. This is
+   scoped to Firefox because these properties switch off the rules above. */
+@supports (-moz-appearance: none) {
+  html {
+    scrollbar-color: var(--pink) var(--ink);
+    scrollbar-width: thin;
   }
 }
 
@@ -107,174 +106,107 @@ body {
   min-width: 320px;
   min-height: 100vh;
   overflow-x: hidden;
-  background: var(--cloud);
+  background:
+    radial-gradient(
+      circle at 50% 20%,
+      rgba(255, 42, 161, 0.06),
+      transparent 32rem
+    ),
+    var(--ink);
 }
-
-::selection {
-  color: var(--navy-900);
-  background: var(--gold-light);
-}
-
-:focus-visible {
-  outline: 2px solid var(--teal-500);
-  outline-offset: 3px;
-}
-
-/* ---------- Shared pieces ---------- */
 
 .eyebrow {
   display: block;
-  color: var(--teal-500);
-  font-size: 0.76rem;
-  font-weight: 600;
+  color: var(--cyan);
+  font-size: 0.68rem;
+  font-weight: 700;
   letter-spacing: 0.18em;
+  text-transform: uppercase;
 }
 
-/* Big serif headings */
-.display {
-  color: var(--navy-900);
-  font-family: var(--serif);
-  font-weight: 300;
-  line-height: 1;
-  letter-spacing: 0.01em;
+/* Chromatic pink/cyan offset used on the big display headings */
+.glitch {
+  font-family: var(--display);
+  font-weight: 900;
+  font-style: italic;
+  text-transform: uppercase;
+  paint-order: stroke fill;
+  -webkit-text-stroke: 1.5px currentColor;
+  text-shadow:
+    3px 0 0 var(--pink),
+    -3px 0 0 var(--cyan);
+}
+
+/* Faint dot texture behind a full-width section */
+.halftone {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+
+  &::before {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    opacity: 0.19;
+    background-image: radial-gradient(var(--paper) 0.8px, transparent 0.8px);
+    background-size: 5px 5px;
+    content: '';
+    pointer-events: none;
+  }
 }
 
 .section-heading {
-  display: flex;
-  align-items: center;
-  gap: 1.25rem;
-  margin-bottom: clamp(2.5rem, 6vw, 4rem);
+  max-width: 1200px;
+  margin: 0 auto 4rem;
 
   h2 {
-    font-size: clamp(2.6rem, 6vw, 4.5rem);
-  }
+    font-size: clamp(3.25rem, 6.5vw, 5.5rem);
+    line-height: 0.85;
+    letter-spacing: -0.025em;
 
-  /* A thin gold line that runs out from each section title */
-  &::after {
-    flex: 1;
-    max-width: 220px;
-    height: 1px;
-    background: linear-gradient(90deg, var(--gold), transparent);
-    content: '';
+    @media (max-width: 560px) {
+      font-size: 3.3rem;
+    }
   }
 }
 
-.button {
+.comic-button {
   display: inline-flex;
-  min-height: 50px;
+  min-height: 47px;
   align-items: center;
   justify-content: center;
-  gap: 0.6rem;
-  padding: 0.75rem 1.6rem;
-  border: 1px solid var(--navy-900);
-  border-radius: 999px;
-  color: var(--white);
-  background: var(--navy-900);
-  font-size: 0.95rem;
-  font-weight: 600;
-  transition:
-    background 200ms ease,
-    border-color 200ms ease,
-    color 200ms ease;
-
-  &:hover {
-    border-color: var(--teal-700);
-    background: var(--teal-700);
-  }
-
-  &:disabled {
-    opacity: 0.6;
-    cursor: wait;
-  }
-
-  &.secondary {
-    color: var(--navy-900);
-    background: transparent;
-
-    &:hover {
-      border-color: var(--teal-500);
-      color: var(--teal-700);
-      background: transparent;
-    }
-  }
-}
-
-.text-link {
-  display: inline-flex;
-  gap: 0.5rem;
-  padding-bottom: 0.2rem;
-  border-bottom: 1px solid var(--gold);
-  color: var(--navy-900);
-  font-weight: 600;
-  transition:
-    color 200ms ease,
-    gap 200ms ease;
-
-  &:hover {
-    gap: 0.8rem;
-    color: var(--teal-700);
-  }
-}
-
-/* Form fields share one look across the contact and admin forms */
-input,
-textarea,
-select {
-  width: 100%;
-  padding: 0.75rem 0.9rem;
-  border: 1px solid var(--line);
-  border-radius: 10px;
+  gap: 1.4rem;
+  padding: 0.75rem 1.1rem;
+  border: 2px solid var(--paper);
+  box-shadow: 5px 5px 0 var(--cyan);
   color: var(--ink);
-  background: var(--white);
-  font: inherit;
-  font-size: 1rem;
-  transition:
-    border-color 200ms ease,
-    box-shadow 200ms ease;
+  background: var(--paper);
+  font-family: var(--display);
+  font-size: 0.92rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transform: skew(-3deg);
+  transition: 150ms ease;
 
   &:hover {
-    border-color: var(--blue-400);
+    box-shadow: 2px 2px 0 var(--cyan);
+    transform: translate(3px, 3px) skew(-3deg);
   }
 
-  &:focus-visible {
-    border-color: var(--teal-500);
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(44, 130, 136, 0.18);
+  &.yellow {
+    border-color: var(--yellow);
+    background: var(--yellow);
+    box-shadow: 5px 5px 0 var(--pink);
   }
-}
 
-textarea {
-  resize: vertical;
-}
-
-/* Scroll reveal: an element marked .reveal fades up as it scrolls into view.
-   Driven by scrolling itself, so it needs no JavaScript. Browsers without
-   scroll-driven animations just show the element. */
-@media (prefers-reduced-motion: no-preference) {
-  @supports (animation-timeline: view()) {
-    .reveal {
-      animation: reveal linear both;
-      animation-timeline: view();
-      animation-range: entry 0% entry 70%;
-    }
+  &.outline {
+    border-color: var(--cyan);
+    box-shadow: 5px 5px 0 var(--pink);
+    color: var(--paper);
+    background: var(--ink);
   }
-}
-
-@keyframes reveal {
-  from {
-    opacity: 0;
-    translate: 0 32px;
-  }
-}
-
-/* Read by screen readers but not shown */
-.visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
 }
 
 /* Stop the page scrolling behind an open dialog */

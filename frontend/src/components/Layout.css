@@ -1,11 +1,5 @@
 .site-shell {
-  display: flex;
   min-height: 100vh;
-  flex-direction: column;
-
-  main {
-    flex: 1;
-  }
 }
 
 .skip-link {
@@ -13,10 +7,9 @@
   z-index: 100;
   top: -100px;
   left: 1rem;
-  padding: 0.6rem 1rem;
-  border-radius: 8px;
-  color: var(--white);
-  background: var(--navy-900);
+  padding: 0.75rem 1rem;
+  color: var(--ink);
+  background: var(--yellow);
 
   &:focus {
     top: 1rem;
@@ -24,110 +17,110 @@
 }
 
 .topbar {
-  position: sticky;
+  position: relative;
   z-index: 40;
-  top: 0;
   display: flex;
-  min-height: 76px;
+  min-height: 78px;
   align-items: center;
   justify-content: space-between;
-  padding: 0 var(--band-pad);
-  color: var(--white);
-  background: var(--navy-900);
-  box-shadow: 0 10px 30px -20px rgba(15, 31, 61, 0.6);
+  padding: 0 max(5vw, 2rem);
+  border-bottom: 1px solid var(--line);
+  background: rgba(8, 8, 11, 0.92);
+  backdrop-filter: blur(12px);
 
-  :focus-visible {
-    outline-color: var(--gold-light);
+  @media (max-width: 850px) {
+    min-height: 68px;
   }
 
-  /* The "IT" monogram in a gold ring */
-  .brand {
-    display: grid;
-    width: 46px;
-    aspect-ratio: 1;
-    place-items: center;
-    border: 1px solid var(--gold);
-    border-radius: 50%;
-    color: var(--gold-light);
-    font-family: var(--serif);
-    font-size: 1.1rem;
-    letter-spacing: 0.04em;
-    transition:
-      background 200ms ease,
-      color 200ms ease;
-
-    &:hover {
-      color: var(--navy-900);
-      background: var(--gold);
-    }
+  @media (max-width: 560px) {
+    padding-inline: 1.25rem;
   }
 
   nav {
     display: flex;
-    gap: clamp(1.5rem, 3vw, 2.75rem);
+    align-items: center;
+    gap: clamp(1rem, 3vw, 3rem);
+
+    @media (max-width: 850px) {
+      gap: 1rem;
+    }
   }
 
   nav a {
     position: relative;
-    padding: 0.35rem 0;
-    color: var(--blue-200);
-    font-size: 0.95rem;
-    transition: color 200ms ease;
+    padding: 0.45rem 0;
+    color: var(--muted);
+    font-family: var(--label);
+    font-size: 1.08rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
 
-    /* A gold line that grows in under the hovered or current page */
+    @media (max-width: 560px) {
+      font-size: 0.92rem;
+    }
+
     &::after {
       position: absolute;
       right: 0;
       bottom: 0;
       left: 0;
-      height: 1px;
-      background: var(--gold);
-      transform: scaleX(0);
-      transition: transform 250ms ease;
+      height: 2px;
+      background: var(--pink);
       content: '';
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 220ms ease;
     }
 
     &:hover,
     &.active {
-      color: var(--white);
+      color: white;
 
       &::after {
         transform: scaleX(1);
+        transform-origin: left;
       }
     }
   }
 }
 
+.brand {
+  color: var(--pink);
+  font-family: var(--display);
+  font-size: 1.4rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+
 .footer {
   display: flex;
-  flex-wrap: wrap;
+  min-height: 150px;
   align-items: center;
   justify-content: space-between;
-  gap: 1.25rem;
-  padding: 2.75rem var(--band-pad);
-  color: var(--white);
-  background: var(--navy-900);
+  gap: 2rem;
+  padding: 2rem max(5vw, 2rem);
+  border-top: 1px solid var(--line);
+  color: var(--dim);
+  font-size: 0.72rem;
 
-  .eyebrow {
-    color: var(--teal-200);
+  @media (max-width: 560px) {
+    align-items: flex-start;
+    flex-direction: column;
+    padding-inline: 1.25rem;
   }
 
   strong {
     display: block;
-    margin-top: 0.3rem;
-    font-family: var(--serif);
-    font-size: 1.25rem;
-    font-weight: 400;
-    letter-spacing: 0.05em;
+    margin-top: 0.5rem;
+    color: var(--paper);
+    font-family: var(--display);
+    font-size: 1.2rem;
   }
 
-  > a {
-    color: var(--gold-light);
-    font-size: 0.95rem;
-    transition: color 200ms ease;
-
-    &:hover {
-      color: var(--white);
-    }
+  a {
+    color: var(--paper);
+    text-decoration: underline;
+    text-decoration-color: var(--pink);
   }
 }

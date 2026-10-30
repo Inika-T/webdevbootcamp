@@ -1,13 +1,14 @@
 import ContactForm from '../components/ContactForm.jsx'
 import { emails, socials } from '../data/contact.js'
+import { publicUrl } from '../publicUrl.js'
 import './Contact.css'
 
 function Contact() {
   return (
-    <section className="contact-page">
+    <section className="contact-page halftone">
       <div className="contact-details">
         <span className="eyebrow">GET IN TOUCH</span>
-        <h1 className="display">CONTACT ME</h1>
+        <h1 className="glitch">CONTACT ME</h1>
         <div className="contact-rule" />
 
         <div className="contact-lines">
@@ -38,6 +39,14 @@ function Contact() {
 
         <ContactForm />
       </div>
+
+      <img
+        className="contact-art"
+        src={publicUrl('/images/contact-gwen-cutout.webp')}
+        alt=""
+        width="1080"
+        height="863"
+      />
     </section>
   )
 }

@@ -125,10 +125,10 @@ function ProjectForm({ project, onSave, onCancel }) {
       </label>
 
       <div className="project-form-actions">
-        <button className="button" type="submit" disabled={saving}>
+        <button className="comic-button yellow" type="submit" disabled={saving}>
           {saving ? 'Saving…' : 'Save'}
         </button>
-        <button className="button secondary" type="button" onClick={onCancel}>
+        <button className="comic-button outline" type="button" onClick={onCancel}>
           Cancel
         </button>
       </div>

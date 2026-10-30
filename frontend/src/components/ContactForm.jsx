@@ -70,7 +70,7 @@ function ContactForm() {
       </label>
 
       <button
-        className="button"
+        className="comic-button yellow"
         type="submit"
         disabled={status === 'sending'}
       >
